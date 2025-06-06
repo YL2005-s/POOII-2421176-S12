@@ -1,3 +1,4 @@
+import entities.Account;
 import entities.Tipo;
 import entities.Transaction;
 import entities.strategy.TransactionStrategy;
@@ -19,6 +20,9 @@ public class Main {
 
         TransactionProcessor processor = new TransactionProcessor(repository);
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== SALDOS INICIALES ===");
+        mostrarSaldos(accountService);
 
         while (true) {
             System.out.println("\n=== MENÚ DE TRANSACCIONES ===");
@@ -68,12 +72,10 @@ public class Main {
                 }
 
                 processor.procesar(transaction);
-                System.out.println("Transacción procesada con éxito.");
-                System.out.println("Tipo: " + transaction.getTipo());
-                System.out.println("Monto final: " + transaction.getMonto());
-                if (transaction.getComision() > 0) {
-                    System.out.println("Comisión aplicada: " + transaction.getComision());
-                }
+                System.out.println("=== " + transaction.getTipo() +" ===");
+                System.out.println("Transferencia exitosa");
+                System.out.println("Detalles: "  + transaction);
+                mostrarSaldos(accountService);
 
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
@@ -83,4 +85,13 @@ public class Main {
         scanner.close();
         System.out.println("Gracias por usar el sistema.");
     }
+
+    private static void mostrarSaldos(AccountService accountService) {
+        System.out.println("Saldos actualizados:");
+        for (String cuentaId : accountService.obtenerCuentas()) {
+            Account cuenta = accountService.obtenerCuenta(cuentaId);
+            System.out.printf("- Cuenta CU%s: $%.1f%n", cuentaId, cuenta.getSaldo());
+        }
+    }
+
 }

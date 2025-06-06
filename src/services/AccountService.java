@@ -2,7 +2,9 @@ package services;
 
 import entities.Account;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class AccountService {
     private final Map<String, Account> cuentas = new HashMap<>();;
@@ -10,6 +12,7 @@ public class AccountService {
     public AccountService() {
         cuentas.put("123", new Account("123", "BancoA", 5000.0, 2000.0));
         cuentas.put("456", new Account("456", "BancoB", 3000.0, 1000.0));
+        cuentas.put("593", new Account("593", "BancoA", 1000.0, 2000.0));
     }
 
     public Account obtenerCuenta(String numeroCuenta) {
@@ -18,6 +21,10 @@ public class AccountService {
             throw new IllegalArgumentException("Cuenta no encontrada.");
         }
         return cuenta;
+    }
+
+    public Set<String> obtenerCuentas() {
+        return cuentas.keySet();
     }
 
     public void debitar(Account cuenta, double monto) {

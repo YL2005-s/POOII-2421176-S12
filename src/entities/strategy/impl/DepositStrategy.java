@@ -15,7 +15,7 @@ public class DepositStrategy implements TransactionStrategy {
     @Override
     public void procesar(Transaction transaction) {
         if (transaction.getMonto() <= 0) {
-            throw new IllegalArgumentException("Monto debe ser positivo.");
+            throw new IllegalArgumentException("El monto debe ser positivo.");
         }
 
         Account cuentaDestino = accountService.obtenerCuenta(transaction.getCuentaDestino());

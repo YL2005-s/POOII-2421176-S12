@@ -64,4 +64,23 @@ public class Transaction {
     public void setComision(double comision) {
         this.comision = comision;
     }
+
+    @Override
+    public String toString() {
+        String origen = (cuentaOrigen == null || cuentaOrigen.isEmpty()) ? "N/A" : "CU" + cuentaOrigen;
+        String destino = (cuentaDestino == null || cuentaDestino.isEmpty()) ? "N/A" : "CU" + cuentaDestino;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tipo=").append(tipo);
+        sb.append(", Monto=").append(monto);
+        sb.append(", Origen=").append(origen);
+        sb.append(", Destino=").append(destino);
+
+        if (referencia != null && !referencia.isEmpty()) {
+            sb.append(", Referencia=").append(referencia);
+        }
+
+        return sb.toString();
+    }
+
 }

@@ -2,20 +2,20 @@ package entities.strategy.impl;
 
 import entities.Account;
 import entities.Transaction;
-import models.account.AccountService;
 import entities.strategy.TransactionStrategy;
+import services.AccountService;
 
 public class TransferenceStrategy implements TransactionStrategy {
-    private final AccountService cuentaService;
+    private final AccountService accountService;
 
-    public TransferenceStrategy(AccountService cuentaService) {
-        this.cuentaService = cuentaService;
+    public TransferenceStrategy(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @Override
     public void procesar(Transaction transaction) {
-        Account origen = cuentaService.obtenerCuenta(transaction.getCuentaOrigen());
-        Account destino = cuentaService.obtenerCuenta(transaction.getCuentaDestino());
+        Account origen = accountService.obtenerCuenta(transaction.getCuentaOrigen());
+        Account destino = accountService.obtenerCuenta(transaction.getCuentaDestino());
 
         double monto = transaction.getMonto();
         boolean esInterbancaria = !origen.getBanco().equals(destino.getBanco());
@@ -29,8 +29,8 @@ public class TransferenceStrategy implements TransactionStrategy {
         }
 
         double comision = esInterbancaria ? monto * 0.01 : 0;
-        cuentaService.debitar(origen, monto + comision);
-        cuentaService.acreditar(destino, monto);
+        accountService.debitar(origen, monto + comision);
+        accountService.acreditar(destino, monto);
 
         transaction.setComision(comision);
     }

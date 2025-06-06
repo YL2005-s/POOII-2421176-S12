@@ -2,8 +2,8 @@ package entities.strategy.impl;
 
 import entities.Account;
 import entities.Transaction;
-import models.account.AccountService;
 import entities.strategy.TransactionStrategy;
+import services.AccountService;
 
 public class DepositStrategy implements TransactionStrategy {
     private final AccountService accountService;

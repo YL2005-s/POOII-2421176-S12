@@ -2,32 +2,32 @@ package entities.strategy.impl;
 
 import entities.Bill;
 import entities.Transaction;
-import models.bill.BillService;
 import entities.strategy.TransactionStrategy;
+import services.BillService;
 
 public class PaymentServicesStrategy implements TransactionStrategy {
-    private final BillService facturaService;
+    private final BillService billService;
 
-    public PaymentServicesStrategy(BillService facturaService) {
-        this.facturaService = facturaService;
+    public PaymentServicesStrategy(BillService billService) {
+        this.billService = billService;
     }
 
     @Override
     public void procesar(Transaction transaction) {
-        Bill factura = facturaService.buscarPorReferencia(transaction.getReferencia());
+        Bill factura = billService.buscarPorReferencia(transaction.getReferencia());
 
         if (factura == null || factura.estaVencida()) {
             throw new IllegalArgumentException("Factura inválida o vencida.");
         }
 
         double monto = factura.getMonto();
-        boolean hayPromocion = facturaService.tieneDescuento(transaction.getReferencia());
+        boolean hayPromocion = billService.tieneDescuento(transaction.getReferencia());
 
         if (hayPromocion) {
             monto *= 0.95;
         }
 
         transaction.setMonto(monto);
-        facturaService.marcarPagada(factura);
+        billService.marcarPagada(factura);
     }
 }

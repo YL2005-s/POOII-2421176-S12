@@ -1,8 +1,6 @@
 package entities;
 
 public class Transaction {
-    public enum Tipo { TRANSFERENCIA, DEPOSITO, PAGO_SERVICIO }
-
     private int id;
     private Tipo tipo;
     private double monto;

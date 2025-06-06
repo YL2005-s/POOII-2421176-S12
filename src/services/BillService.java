@@ -1,7 +1,6 @@
 package services;
 
 import entities.Bill;
-import models.bill.BillService;
 
 import java.time.LocalDate;
 import java.util.HashMap;

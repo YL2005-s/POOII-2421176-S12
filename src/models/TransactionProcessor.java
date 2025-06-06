@@ -16,8 +16,8 @@ public class TransactionProcessor {
         this.transactionStrategy = transactionStrategy;
     }
 
-    public void procesar(Transaction transaccion) {
-        transactionStrategy.procesar(transaccion);
-        transactionRepository.create(transaccion);
+    public void procesar(Transaction transaction) {
+        transactionStrategy.procesar(transaction);
+        transactionRepository.create(transaction);
     }
 }
